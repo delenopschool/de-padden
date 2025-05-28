@@ -1,0 +1,135 @@
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Ouderportaal - De Padden</title>
+    <link rel="icon" type="image/x-icon" href="https://i.ibb.co/zRj6qQB/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Protest+Guerrilla&display=swap" rel="stylesheet">
+</head>
+<style>
+    .banner { float: right; }
+    .footer { position: fixed; left: 0; bottom: 0; width: 100%; color: black; text-align: center; }
+    .hb { color: red; }
+    .title { font-family: "Protest Guerrilla", sans-serif; font-weight: 400; font-style: normal; }
+    /*knop*/
+    .button {
+        background: linear-gradient(45deg, #00ff00, #006a4e, #ffa500);
+        background-size: 200% 100%;
+        border: none;
+        color: white;
+        padding: 8px 27px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 12px;
+        transition: background-position 0.5s ease, transform 0.3s ease;
+        background-position: right;
+    }
+    .button:hover {
+        transform: scale(1.05);
+    }
+    .message { color: #cb4154; }
+    .center { margin: auto; }
+    
+    
+    
+    /*knop met oog*/
+    .eye-button {
+            width: 30px;
+            height: 30px;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            position: absolute;
+            left: 140px;
+            transform: translateY(23%);
+        }
+
+        .eye-button::before {
+            content: '\1F441'; /* Unicode voor een oogje */
+            font-size: 20px;
+            color: black;
+        }
+</style>
+<body>
+    <a href="https://de-padden.glitch.me" style="float:right">
+        <img src="https://i.ibb.co/6y1wQw7/logo-website-klas.png"></img>
+    </a>
+    <h1 class="title">Ouderportaal</h1>
+    <h2><br>Geef het wachtwoord op die u in de klassengroepsapp voor ouders kunt vinden;</h2>
+    <h2><br>lukt het niet om de code te vinden? vraag de code aan Marieke (de moeder van Yuno).</h2>
+    <div class="center">
+        <input type="password" id="guess"> <!-- Standaard als stippen -->
+        </button>
+        <button onclick="checkGuess()" class="button">Controleer</button>
+        <p id="message" class="message"></p><br>
+    </div>
+    <script>
+        const secretNumber = '0378'; // Bewaar als een string
+        let attempts = 3;
+        let timeoutDuration = 0;
+        let isTimeout = false;
+        
+        function checkGuess() {
+            if (isTimeout) {
+                document.getElementById('message').innerText = 'Je hebt een time-out van ' + timeoutDuration + ' minuten. Probeer het later opnieuw.';
+                return;
+            }
+
+            const guess = document.getElementById('guess').value; // Verkrijg de invoer als een string
+            if (guess === secretNumber) { // Vergelijk als strings
+                window.location.href = 'https://de-padden.glitch.me/ouderportaal/783479-snaju3ur3uu4nf-oudermededelingen.html'
+                attempts--;
+                document.getElementById('message').innerText = 'Onjuist, probeer het opnieuw. Pogingen over: ' + attempts;
+                if (attempts <= 0) {
+                    startTimeout();
+                }
+            }
+        }
+
+function startTimeout() {
+    isTimeout = true;
+    let timeoutMessage = 'Geen pogingen meer over.';
+
+    // Bepaal de duur van de time-out
+    if (timeoutDuration === 0) {
+        timeoutDuration = 1; // 1 minuut
+    } else if (timeoutDuration === 1) {
+        timeoutDuration = 5; // 5 minuten
+    } else if (timeoutDuration === 5) {
+        timeoutDuration = 10; // 10 minuten
+    } else if (timeoutDuration === 10) {
+        timeoutDuration = 30; // 30 minuten
+    } else if (timeoutDuration === 30) {
+        timeoutDuration = 60; // 1 uur
+    } else {
+        timeoutDuration = 1440; // 1 dag in minuten
+    }
+
+    document.getElementById('message').innerText = timeoutMessage + ' Tijdelijke Time-out voor ' + timeoutDuration + ' minuten, dit is vanwege veiligheidsmaatregelen.';
+
+    // Reset pogingen na de time-out
+    setTimeout(() => {
+        isTimeout = false;
+        attempts = 3; // Reset pogingen
+        timeoutDuration = 0; // Reset time-out duur
+        document.getElementById('message').innerText = 'Je kunt nu weer proberen.';
+    }, (timeoutDuration * 60000)); // Omrekenen naar milliseconden
+}
+
+// Voeg een event listener toe voor de Enter-toets
+document.getElementById('guess').addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+        checkGuess();
+    }
+});
+</script>
+    <div class="footer">
+       <p>Website gemaakt door <a href="https://de-padden.glitch.me/berkay.html">Berkay</a> | powered by <strong  class="hb">HB</strong></p>
+    </div>
+</body>
+</html>
